@@ -21,81 +21,84 @@
     <main class="flex-row justify-space-between">
       <div class="col-12 col-md-4">
   
-        <div class="card">
+        <div class="card ">
           <h3 class="card-header">Search for a City: </h3>
           <form id="user-form" class="card-body">
+            <label for="city">City</label> 
             <input name="city" id="city" type="text" autofocus="true" class="form-input" />
+            <!-- <label for="country">Country</label> 
+            <input name="country" id="country" type="text" autofocus="true" class="form-input"/> -->
             <button type="submit" class="btn">Search</button>
           </form>
         </div>
   
         <div class="card-city">
           <div id="history" class="card-body">
-            <button class="btn-city">Liverpool</button>
+            <!-- <button class="btn-city">Liverpool</button> -->
           </div>
         </div>
       </div>
   
       <div class="col-12 col-md-8">
         <div class="info col-12">
-        <h2 class="card-title">City:  <span id="repo-search-term"></span></h2>
+        <h2 class="card-title"><span id="display-city"></span><span class="dates"></span></h2> 
         <ul  class=" col-12 col-lg-2">
-            <li>Temp:</li>
-            <li>Wind:</li>
-            <li>Humidity:</li>
-            <li>UV index:</li>
+            <li class="temp">Temp:</li>
+            <li class="wind">Wind:</li>
+            <li class= "humidity">Humidity:</li>
+            <li class="uv-index">UV index:</li>
         </ul>
         </div>
         <div>
             <h2 class="card-title">5-day Forecast</h2>
             <div class="card-days col-12 col-lg-2" >
                 <div class="card-body-days">
-                  <h5>Date: </h5>
+                  <h5 class="dates" >Date: </h5>
                   <h5>Icon </h5>
-                  <h5>Temp: </h5>
-                  <h5>Wind: </h5>
-                  <h5>Humidity:</h5>
+                  <h5 class="temp">Temp: </h5>
+                  <h5 class="wind">Wind: </h5>
+                  <h5 class= "humidity">Humidity:</h5>
                 </div>
             </div>
 
             <div class="card-days col-12 col-lg-2" >
                 <div class="card-body-days">
-                    <h5>Date: </h5>
+                    <h5 class="dates">Date: </h5>
                     <h5>Icon </h5>
-                    <h5>Temp: </h5>
-                    <h5>Wind: </h5>
-                    <h5>Humidity:</h5>
+                    <h5 class="temp">Temp: </h5>
+                    <h5 class="wind">Wind: </h5>
+                    <h5 class= "humidity">Humidity:</h5>
                 </div>
             </div>
 
 
             <div class="card-days col-12 col-lg-2">
                 <div class="card-body-days">
-                    <h5>Date: </h5>
+                    <h5 class="dates">Date: </h5>
                     <h5>Icon </h5>
-                    <h5>Temp: </h5>
-                    <h5>Wind: </h5>
-                    <h5>Humidity:</h5>
+                    <h5 class="temp">Temp: </h5>
+                    <h5 class="wind">Wind: </h5>
+                    <h5 class= "humidity">Humidity:</h5>
                 </div>
             </div>
 
             <div class="card-days col-12 col-lg-2">
                 <div class="card-body-days">
-                    <h5>Date: </h5>
+                    <h5 class="dates">Date: </h5>
                     <h5>Icon </h5>
-                    <h5>Temp: </h5>
-                    <h5>Wind: </h5>
-                    <h5>Humidity:</h5>
+                    <h5 class="temp">Temp: </h5>
+                    <h5 class="wind">Wind: </h5>
+                    <h5 class= "humidity">Humidity:</h5>
                 </div>
             </div>
 
             <div class="card-days col-12 col-lg-2">
                 <div class="card-body-days">
-                    <h5>Date: </h5>
+                    <h5 class="date">Date: </h5>
                     <h5>Icon </h5>
-                    <h5>Temp: </h5>
-                    <h5>Wind: </h5>
-                    <h5>Humidity:</h5>
+                    <h5 class="temp">Temp: </h5>
+                    <h5 class="wind">Wind: </h5>
+                    <h5 class= "humidity">Humidity:</h5>
                 </div>
             </div>
         </div>
@@ -103,7 +106,7 @@
 
     </main> 
   
-    <script src="./js/script.js"></script>
+    <script src="./assets/script.js"></script>
   </body>
 
   </html>
