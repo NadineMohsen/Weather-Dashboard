@@ -1,6 +1,7 @@
 var APIkey="a59ec84f2020621559b2a178b00f32e1";
 var weatherFormEl = document.getElementById("user-form")
 var part2 = document.getElementById("part-2")
+var displayCity= document.getElementById("display-city")
 
 var lat=0;
 var lon=0;
@@ -26,23 +27,27 @@ var getState = function(cityName){
             if(chooseState == true){
                 stateIndex=i;
                 console.log("stateIndex= "+stateIndex)
-                //get lon
-                lon= data[stateIndex].lon;
-                console.log("lon= "+lon)
-                //get lat
-                lat= data[stateIndex].lat;
-                console.log("lat= "+ lat)
-                //display state
-                var stateEl = document.getElementById("display-state")
-                stateEl.textContent= locations;
-                
-                getLocation(lat,lon)
-                saveLocation(cityName,locations,stateIndex)
+                    getCoords(stateIndex,data)
+                    getLocation(lat,lon)
+                    saveLocation(cityName,locations,stateIndex)
                 return;
             }
         }
         })
     }
+
+
+var getCoords=function(stateIndex,data,locations){
+      //get lon
+      lon= data[stateIndex].lon;
+      console.log("lon= "+lon)
+      //get lat
+      lat= data[stateIndex].lat;
+      console.log("lat= "+ lat)
+      //display state
+      var stateEl = document.getElementById("display-state")
+      stateEl.textContent= locations;
+}    
 
 //Get city based on coord
 var getLocation=function(lat,lon){
@@ -141,10 +146,24 @@ var saveLocation=function(cityName,locations){
         buttonEl.setAttribute("class","btn-city")
         //Event listener for buttons in search history
         buttonEl.addEventListener("click",function(){
+            console.log(locations)
             console.log(stateIndex)
+            var geoURL = "http://api.openweathermap.org/geo/1.0/direct?q="+updatesCities[i].city+"&limit=5&appid="+APIkey;
+            console.log("Geo URL: "+ geoURL)
+            // Fetch 
+            fetch(geoURL)
+                .then(function (response) {
+                return response.json();
+                })
+                .then(function (data) {
+                console.log(data)
+                displayCity.textContent=updatesCities[i].city;
+                getCoords(stateIndex,data,locations)
+                getLocation(lat,lon)
+                saveLocation(cityName,locations,stateIndex)
+                })
             return;
         })
-
         return;
     }
     if(!existingCities){
@@ -167,7 +186,6 @@ weatherFormEl.addEventListener("submit",function(event){
     
     //Else get weather and other details
     part2.setAttribute("style","visibility:visible")
-    var displayCity= document.getElementById("display-city")
     displayCity.textContent=cityName;
     
     getState(cityName)
