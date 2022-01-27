@@ -1,56 +1,3 @@
-// var weatherFormEl = document.getElementById("user-form")
-// var part2 = document.getElementById("part-2")
-
-// //Submit button event listener
-// weatherFormEl.addEventListener("submit",function(event){
-//     event.preventDefault();
-    
-//     //Get input
-//     var weatherLocation = document.getElementById("city").value.trim();
-//     console.log(weatherLocation)
-    
-//     //If input is empty display an alert
-//     if(weatherLocation == ""){
-//         alert("Please enter a City name")
-//         return;
-//     }
-    
-//     //Else get weather and other details
-//     part2.setAttribute("style","visibility:visible")
-//     var displayCity= document.getElementById("display-city")
-//     displayCity.textContent=weatherLocation;
-    
-//     //Api URL
-//     // var requestUrl = "https://api.openweathermap.org/data/2.5/forecast?q="+weatherLocation+",GB&appid=a59ec84f2020621559b2a178b00f32e1&units=metric"
-//     var requestUrl = "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}"
-//     console.log(requestUrl)
-//     //Fetch
-//     fetch(requestUrl)
-//         .then(function (response) {
-//         return response.json();
-//         })
-//         .then(function (data) {
-//         // console.log(data)
-//         //Get dates
-//         var forecastDays=[];
-//         for(i=0;i<data.list.length;i++){
-
-//               var weatherInfo = data.list[i];
-//               console.log(weatherInfo)
-              
-//               var date = weatherInfo.dt_txt.split(" ")[0];
-//               console.log(date)
-
-
-//             //   var time = weatherInfo.dt_txt.split(" ")[1].split(":")[0]
-//             //   console.log(time)
-              
-//             //   var currentHour = moment().hours()
-//             //   console.log(currentHour)
-//         }
-// })
-// })
-
 var APIkey="a59ec84f2020621559b2a178b00f32e1";
 var weatherFormEl = document.getElementById("user-form")
 var part2 = document.getElementById("part-2")
@@ -62,7 +9,7 @@ var stateIndex=0;
 var getState = function(cityName){
     // Geocoding API
     var geoURL = "http://api.openweathermap.org/geo/1.0/direct?q="+cityName+"&limit=5&appid="+APIkey;
-    console.log("Geeo URL: "+ geoURL)
+    console.log("Geo URL: "+ geoURL)
     // Fetch 
     fetch(geoURL)
         .then(function (response) {
@@ -73,20 +20,23 @@ var getState = function(cityName){
         // Get all states
         for(i=0;i<5;i++){
         var locations = data[i].state;
-        console.log("All Locations: " + locations)
+        console.log("Location: " + locations)
         //Choose State
         var chooseState = window.confirm ("Are you searching for " + cityName+","+locations)
             if(chooseState == true){
                 stateIndex=i;
-                console.log(stateIndex)
+                console.log("stateIndex= "+stateIndex)
                 //get lon
                 lon= data[stateIndex].lon;
-                console.log(lon)
+                console.log("lon= "+lon)
                 //get lat
                 lat= data[stateIndex].lat;
-                console.log(lat)
+                console.log("lat= "+ lat)
+                //display state
+                var stateEl = document.getElementById("display-state")
+                stateEl.textContent= locations;
                 
-                getLocation(stateIndex,lat,lon)
+                getLocation(lat,lon)
                 return;
             }
         }
@@ -94,23 +44,53 @@ var getState = function(cityName){
     }
 
 //Get city based on coord
-var getLocation=function(stateIndex,lat,lon){
+var getLocation=function(lat,lon){
         //One call weather API
        var weatherURL = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=hourly,minutely&units=metric&appid="+APIkey
-       console.log(weatherURL)
+       console.log("One call API: "+weatherURL)
        fetch(weatherURL)
         .then(function (response) {
         return response.json();
         })
         .then(function (data) {
         console.log(data)
+
         displayWeather(data)    
     })
 }
 
-var displayWeather=function(){
-
+var displayWeather=function(data){
+    //display current date
+    var dateEl = document.getElementById("display-date")
+    dateEl.textContent=moment.unix(data.current.dt).format("MM/DD/YYYY")
+    //display current icon
+    var iconEl = document.getElementById("display-icon")
+    iconCode= data.current.weather[0].icon
+    iconSrc = "http://openweathermap.org/img/wn/"+iconCode+".png"
+    iconEl.setAttribute("src",iconSrc)
+    //display current temp
+    var tempEl = document.getElementById("display-temp")
+    tempEl.textContent = Math.floor(data.current.temp) + "°C";
+    //display current wind
+    var windEl = document.getElementById("display-wind")
+    windEl.textContent = data.current.wind_speed + " m/s";
+    //display current wind
+    var humidityEl = document.getElementById("display-humidity")
+    humidityEl.textContent = data.current.humidity + "%";
+    //display UV index
+    var uvIndexEl = document.getElementById("display-uv-index")
+    uvIndexEl.textContent = data.current.uvi;
+    if(data.current.uvi>=7){
+        uvIndexEl.setAttribute("class","high")
+    }
+    else if(data.current.uvi>=2){
+        uvIndexEl.setAttribute("class","moderate")
+    }
+    else if(data.current.uvi<2){
+        uvIndexEl.setAttribute("class","low")
+    }
 }
+
 weatherFormEl.addEventListener("submit",function(event){
     event.preventDefault();
     var cityName = document.getElementById("city").value.trim();
