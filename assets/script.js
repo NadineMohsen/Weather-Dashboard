@@ -37,6 +37,7 @@ var getState = function(cityName){
                 stateEl.textContent= locations;
                 
                 getLocation(lat,lon)
+                saveLocation(cityName,locations,stateIndex)
                 return;
             }
         }
@@ -115,6 +116,42 @@ var displayForecast= function(data){
         var humidity = document.getElementById("humidity-"+i)
         humidity.textContent = data.daily[i].humidity + "%";
     }
+}
+
+var saveLocation=function(cityName,locations){
+    //history div
+    var historyEl = document.getElementById("history");
+    // local storage
+    var localStorageCities=""; 
+    var existingCities = JSON.parse(localStorage.getItem(localStorageCities));
+    var newCity = {
+        city:cityName,
+        state: locations
+    }
+    var updatesCities = [newCity];
+    if(existingCities){
+        updatesCities= updatesCities.concat(existingCities);
+    }
+    localStorage.setItem(localStorageCities, JSON.stringify(updatesCities));
+    //create buttons 
+    for(var i=0;i<updatesCities.length;i++){
+        var buttonEl= document.createElement("button")
+        historyEl.appendChild(buttonEl)
+        buttonEl.textContent =  updatesCities[i].city +","+ updatesCities[i].state;
+        buttonEl.setAttribute("class","btn-city")
+        //Event listener for buttons in search history
+        buttonEl.addEventListener("click",function(){
+            console.log(stateIndex)
+            return;
+        })
+
+        return;
+    }
+    if(!existingCities){
+        return;
+    }
+
+    
 }
 
 weatherFormEl.addEventListener("submit",function(event){
