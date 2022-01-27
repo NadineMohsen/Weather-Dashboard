@@ -94,33 +94,23 @@ var getState = function(cityName){
     }
 
 //Get city based on coord
-    var getLocation=function(){
+var getLocation=function(stateIndex,lat,lon){
         //One call weather API
        var weatherURL = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=hourly,minutely&units=metric&appid="+APIkey
        console.log(weatherURL)
-    }
-   
+       fetch(weatherURL)
+        .then(function (response) {
+        return response.json();
+        })
+        .then(function (data) {
+        console.log(data)
+        displayWeather(data)    
+    })
+}
 
+var displayWeather=function(){
 
-// function getWeather(cityName){
-//     // var lat= 33.44;
-//     // var lon= -94.04;
-//     var APIkey = "a59ec84f2020621559b2a178b00f32e1";
-//     var requestUrl = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=hourly&appid="+APIkey;
-//     console.log(requestUrl)
-    
-//     fetch(requestUrl)
-//         .then(function (response) {
-//         return response.json();
-//         })
-//         .then(function (data) {
-//         console.log(data)
-//         })
-//     }
-
-
-  
-
+}
 weatherFormEl.addEventListener("submit",function(event){
     event.preventDefault();
     var cityName = document.getElementById("city").value.trim();
