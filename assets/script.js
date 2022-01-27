@@ -55,7 +55,8 @@ var getLocation=function(lat,lon){
         .then(function (data) {
         console.log(data)
 
-        displayWeather(data)    
+        displayWeather(data)
+        displayForecast(data)    
     })
 }
 
@@ -65,8 +66,8 @@ var displayWeather=function(data){
     dateEl.textContent=moment.unix(data.current.dt).format("MM/DD/YYYY")
     //display current icon
     var iconEl = document.getElementById("display-icon")
-    iconCode= data.current.weather[0].icon
-    iconSrc = "http://openweathermap.org/img/wn/"+iconCode+".png"
+    var iconCode= data.current.weather[0].icon
+    var iconSrc = "http://openweathermap.org/img/wn/"+iconCode+".png"
     iconEl.setAttribute("src",iconSrc)
     //display current temp
     var tempEl = document.getElementById("display-temp")
@@ -80,6 +81,7 @@ var displayWeather=function(data){
     //display UV index
     var uvIndexEl = document.getElementById("display-uv-index")
     uvIndexEl.textContent = data.current.uvi;
+    //chose color based on uv index
     if(data.current.uvi>=7){
         uvIndexEl.setAttribute("class","high")
     }
@@ -88,6 +90,30 @@ var displayWeather=function(data){
     }
     else if(data.current.uvi<2){
         uvIndexEl.setAttribute("class","low")
+    }
+   
+}
+
+var displayForecast= function(data){
+    //for loop for 5 forecast days
+    for(var i=0;i<5;i++){
+        //dates
+        var date = document.getElementById("date-"+ i)
+        date.textContent= moment.unix(data.daily[i].dt).format("MM/DD/YYYY")
+        //icons
+        var icon = document.getElementById("icon-"+ i)
+        var iconCode= data.daily[i].weather[0].icon
+        var iconSrc = "http://openweathermap.org/img/wn/"+iconCode+".png"
+        icon.setAttribute("src",iconSrc)
+        //temp
+        var temp = document.getElementById("temp-"+i)
+        temp.textContent = Math.floor(data.daily[i].temp.day) + "°C";
+        //wind
+        var wind = document.getElementById("wind-"+i)
+        wind.textContent = data.daily[i].wind_speed + " m/s";
+        //humidity
+        var humidity = document.getElementById("humidity-"+i)
+        humidity.textContent = data.daily[i].humidity + "%";
     }
 }
 
@@ -108,5 +134,4 @@ weatherFormEl.addEventListener("submit",function(event){
     displayCity.textContent=cityName;
     
     getState(cityName)
-    // getWeather(cityName)
 })
