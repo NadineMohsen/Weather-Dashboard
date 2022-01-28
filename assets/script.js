@@ -4,6 +4,8 @@ var part2 = document.getElementById("part-2")
 var displayCity= document.getElementById("display-city")
 var stateEl = document.getElementById("display-state")
 
+var baseURL = ""
+
 var lat=0;
 var lon=0;
 var stateIndex=0;
@@ -11,7 +13,7 @@ var stateIndex=0;
 //Get coordinates for the searched City
 var getState = function(cityName){
     // Geocoding API
-    var geoURL = "http://api.openweathermap.org/geo/1.0/direct?q="+cityName+"&limit=5&appid="+APIkey;
+    var geoURL = "https://api.openweathermap.org/geo/1.0/direct?q="+cityName+"&limit=5&appid="+APIkey;
     console.log("Geo URL: "+ geoURL)
     // Fetch 
     fetch(geoURL)
@@ -84,7 +86,7 @@ var displayWeather=function(data){
     //display current icon
     var iconEl = document.getElementById("display-icon")
     var iconCode= data.current.weather[0].icon
-    var iconSrc = "http://openweathermap.org/img/wn/"+iconCode+".png"
+    var iconSrc = "https://openweathermap.org/img/wn/"+iconCode+".png"
     iconEl.setAttribute("src",iconSrc)
     //display current temp
     var tempEl = document.getElementById("display-temp")
@@ -120,7 +122,7 @@ var displayForecast= function(data){
         //icons
         var icon = document.getElementById("icon-"+ i)
         var iconCode= data.daily[i].weather[0].icon
-        var iconSrc = "http://openweathermap.org/img/wn/"+iconCode+".png"
+        var iconSrc = "https://openweathermap.org/img/wn/"+iconCode+".png"
         icon.setAttribute("src",iconSrc)
         //temp
         var temp = document.getElementById("temp-"+i)
@@ -159,7 +161,7 @@ var saveLocation=function(cityName,locations){
         buttonEl.addEventListener("click",function(){
             console.log(locations)
             console.log(stateIndex)
-            var geoURL = "http://api.openweathermap.org/geo/1.0/direct?q="+updatesCities[i].city+"&limit=5&appid="+APIkey;
+            var geoURL = "https://api.openweathermap.org/geo/1.0/direct?q="+updatesCities[i].city+"&limit=5&appid="+APIkey;
             console.log("Geo URL: "+ geoURL)
             // Fetch 
             fetch(geoURL)
