@@ -2,6 +2,7 @@ var APIkey="a59ec84f2020621559b2a178b00f32e1";
 var weatherFormEl = document.getElementById("user-form")
 var part2 = document.getElementById("part-2")
 var displayCity= document.getElementById("display-city")
+var stateEl = document.getElementById("display-state")
 
 var lat=0;
 var lon=0;
@@ -27,7 +28,7 @@ var getState = function(cityName){
             if(chooseState == true){
                 stateIndex=i;
                 console.log("stateIndex= "+stateIndex)
-                    getCoords(stateIndex,data)
+                    getCoords(stateIndex,data,locations)
                     getLocation(lat,lon)
                     saveLocation(cityName,locations,stateIndex)
                 return;
@@ -45,7 +46,6 @@ var getCoords=function(stateIndex,data,locations){
       lat= data[stateIndex].lat;
       console.log("lat= "+ lat)
       //display state
-      var stateEl = document.getElementById("display-state")
       stateEl.textContent= locations;
 }    
 
@@ -160,7 +160,6 @@ var saveLocation=function(cityName,locations){
                 displayCity.textContent=updatesCities[i].city;
                 getCoords(stateIndex,data,locations)
                 getLocation(lat,lon)
-                saveLocation(cityName,locations,stateIndex)
                 })
             return;
         })
