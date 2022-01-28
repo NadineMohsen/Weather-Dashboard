@@ -13,34 +13,35 @@
 </head>
 
 <body class="flex-column min-100-vh">
-    
+    <!-- header -->
     <header>
       <h1> Weather Dashboard</h1>
     </header>
-  
+    <!-- Main -->
+      <!-- left div -->
     <main class="flex-row justify-space-between">
       <div class="col-12 col-md-4">
-  
-        <div class="card ">
+        
+        <div class="card">
+          <!-- search form -->
           <h3 class="card-header">Search for a City: </h3>
           <form id="user-form" class="card-body">
             <label for="city">City</label> 
             <input name="city" id="city" type="text" autofocus="true" class="form-input" />
-            <!-- <label for="country">Country</label> 
-            <input name="country" id="country" type="text" autofocus="true" class="form-input"/> -->
             <button type="submit" class="btn">Search</button>
           </form>
         </div>
-  
+        <!-- history div -->
         <div class="card-city">
           <div id="history" class="card-body">
-            <!-- <button class="btn-city">Liverpool</button> -->
           </div>
         </div>
+      
       </div>
-  
+      <!-- right div -->
       <div class="col-12 col-md-8" id="part-2" style="visibility: hidden;">
         <div class="info col-12">
+          <!-- current weather div -->
         <h2 class="card-title"><span id="display-city"></span>,<span id="display-state"></span> <span id="display-date"></span> <img id="display-icon"/></h2> 
         <ul  class="col-12 col-lg-2">
             <li>Temp: <span id="display-temp"></span></li>
@@ -51,7 +52,7 @@
         </div>
         <div>
             <h2 class="card-title">5-day Forecast</h2>
-
+            <!-- forecast 5 days -->
             <div class="card-days col-12 col-lg-2">
               <div class="card-body-days">
                 <h5>Date: <span id="date-0"></span></h5>

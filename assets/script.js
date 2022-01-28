@@ -7,6 +7,7 @@ var stateEl = document.getElementById("display-state")
 var lat=0;
 var lon=0;
 var stateIndex=0;
+
 //Get coordinates for the searched City
 var getState = function(cityName){
     // Geocoding API
@@ -15,16 +16,26 @@ var getState = function(cityName){
     // Fetch 
     fetch(geoURL)
         .then(function (response) {
-        return response.json();
-        })
+        return response.json();}
+        )
         .then(function (data) {
         console.log(data)
         // Get all states
         for(i=0;i<5;i++){
-        var locations = data[i].state;
-        console.log("Location: " + locations)
-        //Choose State
-        var chooseState = window.confirm ("Are you searching for " + cityName+","+locations)
+            //if there is no available states for the city name entered by the user ,display alert
+            if (!data[i]){
+                alert("Error! Please enter a valid City Name")
+                return;
+            }
+            //display weather div
+            part2.setAttribute("style","visibility:visible")
+            //display city name
+            displayCity.textContent=cityName.toUpperCase();
+            //get all state options
+            var locations = data[i].state;
+            console.log("Location: " + locations)
+            //Choose State
+            var chooseState = window.confirm ("Are you searching for " + cityName+","+locations)
             if(chooseState == true){
                 stateIndex=i;
                 console.log("stateIndex= "+stateIndex)
@@ -87,7 +98,7 @@ var displayWeather=function(data){
     //display UV index
     var uvIndexEl = document.getElementById("display-uv-index")
     uvIndexEl.textContent = data.current.uvi;
-    //chose color based on uv index
+    //choose color based on uv index
     if(data.current.uvi>=7){
         uvIndexEl.setAttribute("class","high")
     }
@@ -157,7 +168,7 @@ var saveLocation=function(cityName,locations){
                 })
                 .then(function (data) {
                 console.log(data)
-                displayCity.textContent=updatesCities[i].city;
+                displayCity.textContent= (updatesCities[i].city).toUpperCase();
                 getCoords(stateIndex,data,locations)
                 getLocation(lat,lon)
                 })
@@ -172,20 +183,16 @@ var saveLocation=function(cityName,locations){
     
 }
 
+//Event Listener for Submit button
 weatherFormEl.addEventListener("submit",function(event){
     event.preventDefault();
+    //input city name variable
     var cityName = document.getElementById("city").value.trim();
     console.log("City Name: "+ cityName)
-
     // If input is empty display an alert
     if(cityName == ""){
         alert("Please enter a City name")
         return;
-    }
-    
-    //Else get weather and other details
-    part2.setAttribute("style","visibility:visible")
-    displayCity.textContent=cityName;
-    
+    } 
     getState(cityName)
 })

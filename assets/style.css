@@ -16,7 +16,7 @@
 html {
     height: 100%;
 }
-
+/* header style and background-image */
 header{
     background-image:url("./images/background.jpg");
     background-size: cover;
@@ -435,7 +435,7 @@ li{
     }
   }
   
-  
+/* for smaller screens */
 @media screen and (max-width: 768px) {
     header{
         flex-direction: column;
@@ -458,7 +458,7 @@ li{
       }
     }  
 
-
+/* Uv index styles */
 .high{
   background-color: red;
   border-radius: 15%;
